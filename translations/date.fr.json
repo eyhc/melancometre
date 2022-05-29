@@ -1,0 +1,17 @@
+{
+    "lang": "fr",
+    "dictionary": {
+        "Jan": "Jan",
+        "Feb": "Fev",
+        "Mar": "Mar",
+        "Apr": "Avr",
+        "May": "Mai",
+        "Jun": "Juin",
+        "Jul": "Juil",
+        "Aug": "Août",
+        "Sep": "Sept",
+        "Oct": "Oct",
+        "Nov": "Nov",
+        "Dec": "Dec"
+    }
+}
