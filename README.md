@@ -18,7 +18,7 @@ for android refer to [https://cordova.apache.org/docs/en/12.x-2025.01/guide/plat
 
 ## Run on browser :
 
-**N.B.** on browser, data aren't persistent
+**N.B.** on browser, the data aren't persistent
 
     npm run build && cordova run browser
 
@@ -36,4 +36,4 @@ Documentation may be generated with
 
     npm run doc
 
-and then opening `docs/index.html`.
+and then open `docs/index.html`.

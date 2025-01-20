@@ -21,3 +21,5 @@ plugins
 /docs
 
 package-lock.json
+*.apk
+*.aab
