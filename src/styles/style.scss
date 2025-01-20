@@ -1,0 +1,32 @@
+@import url("/node_modules/bootstrap/dist/css/bootstrap.min.css");
+
+$bootstrap-icons-font-dir: "/node_modules/bootstrap-icons/font/fonts";
+
+@import url("/node_modules/bootstrap-icons/font/bootstrap-icons.min.css");
+
+html {
+    height: 100% !important;
+}
+
+body {
+    height: 100% !important;
+    padding-top: 3.5rem;
+}
+
+.icon { 
+    display: inline-block;
+    font-size: 2rem
+}
+
+.text-1 { color: #fabe3c; }
+.text-2 { color: #2fb4b3; }
+.text-3 { color: #62929e; }
+.text-4 { color: #54697a; }
+.text-5 { color: #b7b7b7; }
+
+.input-group > .ml-3 {
+    min-width: 65px;
+    text-align: right;
+}
+
+.input-group > .icon { min-width: 56px; }

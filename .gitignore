@@ -1,0 +1,23 @@
+
+.DS_STORE
+Thumbs.db
+.idea
+.chrome
+/*.log
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+node_modules
+platforms
+plugins
+
+# Compiled files
+/www
+/.nyc_output
+/coverage
+/docs
+
+package-lock.json

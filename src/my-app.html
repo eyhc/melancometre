@@ -1,0 +1,40 @@
+<import from="./navbar.html"></import>
+<import from="./state.html"></import>
+
+<navbar open-config.bind="openConfig" logo.bind="logo"></navbar>
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-md-5 col-lg-4 px-4 bg-light border-left">
+            <!-- title -->
+            <div class="border-bottom pt-3 pb-2 mb-3 d-flex">
+                <div class="h5 w-100 my-auto">Où j'en suis ?</div>
+                <div class="text-right">
+                    <button class="btn btn-outline-success" click.trigger="addState">
+                        <i class="bi bi-floppy2-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- error -->
+            <div class="alert alert-danger" role="alert" if.bind="error">
+                <strong>Quelque chose s'est mal passée</strong>
+                <br> Veuillez vérifier le formulaire ou essayer plus tard.
+            </div>
+
+            <!-- state -->
+            <state state.bind="state" add-state.bind="addState"></state>
+        </div>
+
+        <!-- CHART -->
+        <div class="col-md-7 col-lg-8 order-first">
+            <div class="border-bottom pt-3 pb-2 mb-3">
+                <h1 class="h5">Mon évolution</h1>
+            </div>
+
+            <div>
+                <canvas id="chart" width="800" height="450"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

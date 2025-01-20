@@ -1,0 +1,70 @@
+<import from="./state-converter"></import>
+
+<bindable name="state"></bindable>
+
+<!-- moral -->
+<div class="mb-3">
+    <label for="moral">Mon moral</label>
+    <div class="input-group flex-nowrap">
+        <i class="icon mr-3 ${state.moral | toMoralIcon}"></i>
+        <div class="w-100">
+            <input type="range" class="form-range" min="0" max="100" step="5" id="moral" value.bind="state.moral">
+            <div class="d-flex justify-content-between">
+                <small>Pas top</small>
+                <small>Moyen</small>
+                <small>Très bien</small>
+            </div>
+        </div>
+        <span class="ml-3">${state.moral}&nbsp;%</span>
+    </div>
+</div>
+
+<!-- sleep -->
+<div class="mb-3">
+    <label for="sleep">Mon sommeil</label>
+    <div class="input-group flex-nowrap">
+        <i class="icon mr-3 ${state.sleep | toSleepIcon}"></i>
+        <div class="w-100">
+            <input type="range" class="form-range" min="0" max="100" step="5" id="sleep" value.bind="state.sleep">
+            <div class="d-flex justify-content-between">
+                <small>Pas top</small>
+                <small>Moyen</small>
+                <small>Très bien</small>
+            </div>
+        </div>
+        <span class="ml-3">${state.sleep}&nbsp;%</span>
+    </div>
+</div>
+
+<!-- energy -->
+<div class="mb-3">
+    <label for="energy">Mon niveau d'énergie</label>
+    <div class="input-group flex-nowrap">
+        <i class="icon mr-3 ${state.energy | toEnergyIcon}"></i>
+        <div class="w-100">
+            <input type="range" class="form-range" min="0" max="100" step="5" id="energy" value.bind="state.energy">
+            <div class="d-flex justify-content-between">
+                <small>Pas top</small>
+                <small>Moyen</small>
+                <small>Très bien</small>
+            </div>
+        </div>
+        <span class="ml-3">${state.energy}&nbsp;%</span>
+    </div>
+</div>
+
+<!-- suicidal ideas -->
+<div class="mb-3">
+    <label for="suicidal_ideas">Mes idées suicidaires</label>
+    <div class="input-group flex-nowrap">
+        <i class="icon mr-3 ${state.suic_ideas | toSuicIdeasIcon}"></i>
+        <div class="w-100">
+            <input type="range" class="form-range" min="0" max="100" step="5" id="suicidal_ideas" value.bind="state.suic_ideas">
+            <div class="d-flex justify-content-between">
+                <small>Pas du tout</small>
+                <small>Beaucoup</small>
+            </div>
+        </div>
+        <span class="ml-3">${state.suic_ideas}&nbsp;%</span>
+    </div>
+</div>
