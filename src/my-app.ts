@@ -48,6 +48,8 @@ export class MyApp {
     }
 
     initDB() {
+        this.openDB();
+
         MyApp.metricsdb
         .create()
         .then(() => {
@@ -121,8 +123,8 @@ export class MyApp {
 
     }
 
-    public reopenDB(): void {
-        MyApp.metricsdb.reopen();
-        MyApp.notesdb.reopen();
+    public openDB(): void {
+        MyApp.metricsdb.open();
+        MyApp.notesdb.open();
     }
 }

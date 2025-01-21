@@ -15,8 +15,8 @@ document.addEventListener('deviceready', onDeviceReady);
 function init() {
     // init chart
     const app = aurelia.container.get(MyApp);
+    app.initDB(); // init db first
     app.initChart();
-    app.initDB();
 
     // hide splashscreen (cordova)
     if (navigator.splashscreen)
@@ -80,7 +80,7 @@ function onPause() {
 /* Called when app is brought to the foreground */
 function onResume() {
     // reopen database
-    aurelia.container.get(MyApp).reopenDB()
+    aurelia.container.get(MyApp).openDB()
     if (navigator.splashscreen)
         navigator.splashscreen.hide();
 }

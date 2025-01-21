@@ -13,25 +13,12 @@
  * with the database
  */
 export abstract class DataBase {
-    protected db: SQLitePlugin.Database | null;
-
-    /**
-     * open the database and that's all
-     */
-    constructor() {
-        // create db object
-        this.db = window.sqlitePlugin.openDatabase({
-            name: 'melancometre.db',
-            location: 'default',
-            androidDatabaseProvider: 'system',
-            androidLockWorkaround: 1
-        });
-    }
+    protected db: SQLitePlugin.Database | null = null;
 
     /**
      * Reopens the database after it was closed.
      */
-    public reopen(): void {
+    public open(): void {
         // nothing to do if already setted
         if (this.db !== null) return;
 
