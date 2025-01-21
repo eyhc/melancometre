@@ -31,6 +31,7 @@
     "src"
   ],
   "files": [
-    "src/resource.d.ts"
+    "src/resource.d.ts",
+    "src/notification.d.ts"
   ]
 }

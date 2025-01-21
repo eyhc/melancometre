@@ -1,14 +1,14 @@
 {
   "name": "melancometre",
   "description": "A basic application for collecting data about his mental health stored locally",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/eyhc/melancometre/"
   },
   "license": "GPL-3.0-only",
   "scripts": {
-    "lint:js": "eslint src",
+    "lint:js": "eslint src --ignore-pattern '**/*.d.ts'",
     "lint:css": "stylelint \"src/**/*.scss\"",
     "lint": "npm run lint:js && npm run lint:css",
     "doc": "typedoc --entryPointStrategy Expand src",
@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@aurelia/router": "latest",
-    "@ionic-native/local-notifications": "^5.36.0",
     "@types/chart.js": "^2.9.41",
     "aurelia": "latest",
     "bootstrap": "^5.3.3",
@@ -64,9 +63,7 @@
     "plugins": {
       "cordova-plugin-screen-orientation": {},
       "cordova-sqlite-storage": {},
-      "cordova-plugin-local-notification": {
-        "ANDROIDX_CORE_VERSION": "1.12.0"
-      }
+      "cordova-plugin-local-notification": {}
     }
   }
 }

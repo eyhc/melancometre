@@ -1,77 +1,86 @@
-// Import our custom CSS
+// Import our CSS (especially bootstrap)
 import './styles/style.scss'
 
 import Aurelia from 'aurelia';
 import { MyApp } from './my-app';
-import { initChart } from './chart';
-import { Chart, registerables } from 'chart.js'
-import { closeDB, initDB } from './db';
-import { LocalNotifications } from '@ionic-native/local-notifications';
 
+/* an aurelia object */
+const aurelia = new Aurelia();
+
+/* listen cordova deviceready event */
 document.addEventListener('deviceready', onDeviceReady);
 
-function onDeviceReady() {
-    document.addEventListener("pause", onPause, false);
-    document.addEventListener("resume", onResume, false);
 
-    initDB().then(() => {
-        const x = Aurelia.app(MyApp).start();
-        if (typeof x !== "undefined") {
-            x.then(init);
-        } else {
-            init();
-        }
-    });
-    window.screen.orientation.unlock();
-
-    LocalNotifications.hasPermission().then((granted) => {
-        if (granted) {
-            scheduleDailyNotification();
-        }
-        else {
-            LocalNotifications.requestPermission().then((granted) => {
-                if (granted) {
-                    scheduleDailyNotification();
-                }
-                else {
-                    console.log("notification not allowed");
-                }
-            })
-        }
-    })
-}
-
-function onPause() {
-    // save data by closing database
-    closeDB().then(() => {
-        if (navigator.splashscreen)
-            navigator.splashscreen.show();
-    });
-}
-
-function onResume() {
-    // reopen database
-    initDB().then(() => {
-        if (navigator.splashscreen)
-            navigator.splashscreen.hide();
-    });
-}
-
-// 
+/* initialization function after starting Aurelia */
 function init() {
-    Chart.register(...registerables)
-    initChart();
+    // init chart
+    const app = aurelia.container.get(MyApp);
+    app.initChart();
+    app.initDB();
+
+    // hide splashscreen (cordova)
     if (navigator.splashscreen)
         navigator.splashscreen.hide();
 }
 
+/* Schedule notification every day at 6:00 pm
+ * see https://github.com/katzer/cordova-plugin-local-notifications
+ */
 function scheduleDailyNotification() {
-    LocalNotifications.schedule({
-        id: 1,
+    cordova.plugins.notification.local.schedule({
         title: 'Melancometre',
         text: 'Penser a remplir votre tableau de bord aujourd\'hui',
-        trigger: { every: { hour: 18, minute: 50 } },
-        smallIcon: 'res://logo',
-        foreground: true
+        trigger: { 
+            every: {hour: 19, minute: 35}
+        }
     });
+}
+
+
+/* Called when cordova app is ready */
+function onDeviceReady() {
+    // listen pause and resume events (cordova)
+    // when app is in the background or back in the foreground
+    document.addEventListener("pause", onPause, false);
+    document.addEventListener("resume", onResume, false);
+
+    // start aurelia
+    const x = aurelia.app(MyApp).start();
+
+    // then call init()
+    if (typeof x !== "undefined") {
+        x.then(init);
+    } else {
+        init();
+    }
+        
+    // allow changing screen orientation (cordova)
+    window.screen.orientation.unlock();
+
+    // request permission for notification and schedule it
+    cordova.plugins.notification.local.hasPermission((granted) => {
+        if (granted) scheduleDailyNotification();
+        else {
+            cordova.plugins.notification.local.requestPermission((granted) => {
+                if (granted) scheduleDailyNotification();
+                else console.log("notification not allowed");
+            });
+        }
+    });
+}
+
+/* Called when app is brought to the background */
+function onPause() {
+    // save data by closing database
+    aurelia.container.get(MyApp).closeDB();
+    if (navigator.splashscreen)
+        navigator.splashscreen.show();
+}
+
+/* Called when app is brought to the foreground */
+function onResume() {
+    // reopen database
+    aurelia.container.get(MyApp).reopenDB()
+    if (navigator.splashscreen)
+        navigator.splashscreen.hide();
 }

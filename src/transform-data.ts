@@ -1,5 +1,12 @@
+/**
+ * This module ...
+ * 
+ * @packageDocumentation
+ */
+
 import type { ChartData } from "./chart";
-import type { Sample } from "./db";
+import type { Metric } from "./db-metrics";
+
 
 /**
  * it calculates incrementally the average of provided integers
@@ -49,7 +56,7 @@ class IncrementalAverage {
  * It expose the main function only: static transform(data) -> chardata
  */
 export class DataTransformer {
-    protected data: Sample[] = [];
+    protected data: Metric[] = [];
     protected labels: string[] = [];
     protected moral_data: number[] = [];
     protected energy_data: number[] = [];
@@ -60,7 +67,7 @@ export class DataTransformer {
      * Initialize the "transformer" before {@link transform}
      * @param states the data to transform
      */
-    protected setStates(states: Sample[]) {
+    protected setStates(states: Metric[]) {
         this.data = states;
 
         // clear all lists
@@ -90,7 +97,7 @@ export class DataTransformer {
      * @param states the data to transform
      * @returns the corresponding chart data object
      */
-    public static transform(states: Sample[]): ChartData  {
+    public static transform(states: Metric[]): ChartData  {
         const dataTransformer = new DataTransformer();
         dataTransformer.setStates(states);
 
@@ -100,21 +107,29 @@ export class DataTransformer {
         const energy_av = new IncrementalAverage();
         const s_ideas_av = new IncrementalAverage();
 
-        let last_date: string | undefined;
-        let curr_date: string;
-        for (const state of dataTransformer.data) {
-            const date = new Date(state.date);
-            curr_date = date.toLocaleDateString();
-            if (!last_date) last_date = curr_date;
+        // TODO
+        let last_day: string | undefined;
+        let curr_day: string;
 
-            if (last_date === curr_date) {
+        // TODO
+        for (const state of dataTransformer.data) {
+
+            // TODO
+            const date = new Date(state.date);
+            curr_day = date.toLocaleDateString();
+            if (!last_day) last_day = curr_day;
+
+            // TODO
+            if (last_day === curr_day) {
                 moral_av.add(state.moral);
                 energy_av.add(state.energy);
                 sleep_av.add(state.sleep);
                 s_ideas_av.add(state.suicidal_ideas);
             }
+
+            // TODO
             else {
-                dataTransformer.labels.push(last_date);
+                dataTransformer.labels.push(last_day);
                 this.pushResetAndAdd(
                     dataTransformer.moral_data, moral_av, state.moral
                 );
@@ -128,18 +143,21 @@ export class DataTransformer {
                     dataTransformer.suic_ideas_data, s_ideas_av, state.suicidal_ideas
                 );
 
-                last_date = curr_date;
+                // TODO
+                last_day = curr_day;
             }
         }
 
-        if (last_date) {
-            dataTransformer.labels.push(last_date);
+        // TODO
+        if (last_day) {
+            dataTransformer.labels.push(last_day);
             dataTransformer.moral_data.push(moral_av.getAverage());
             dataTransformer.sleep_data.push(sleep_av.getAverage());
             dataTransformer.energy_data.push(energy_av.getAverage());
             dataTransformer.suic_ideas_data.push(s_ideas_av.getAverage());
         }
 
+        // TODO
         return dataTransformer.getTransformedData();
     }
 
