@@ -14,7 +14,7 @@ document.addEventListener('deviceready', onDeviceReady);
 /* initialization function after starting Aurelia */
 function init() {
     // init chart
-    const app = aurelia.container.get(MyApp);
+    const app = aurelia.root.controller.viewModel as MyApp;
     app.initDB(); // init db first
     app.initChart();
 
@@ -28,11 +28,10 @@ function init() {
  */
 function scheduleDailyNotification() {
     cordova.plugins.notification.local.schedule({
+        id: 1,
         title: 'Melancometre',
         text: 'Penser a remplir votre tableau de bord aujourd\'hui',
-        trigger: { 
-            every: {hour: 19, minute: 35}
-        }
+        trigger: { every: 'day', count: 5 }
     });
 }
 
@@ -72,7 +71,8 @@ function onDeviceReady() {
 /* Called when app is brought to the background */
 function onPause() {
     // save data by closing database
-    aurelia.container.get(MyApp).closeDB();
+    const app = aurelia.root.controller.viewModel as MyApp;
+    app.closeDB();
     if (navigator.splashscreen)
         navigator.splashscreen.show();
 }
@@ -80,7 +80,8 @@ function onPause() {
 /* Called when app is brought to the foreground */
 function onResume() {
     // reopen database
-    aurelia.container.get(MyApp).openDB()
+    const app = aurelia.root.controller.viewModel as MyApp;
+    app.openDB();
     if (navigator.splashscreen)
         navigator.splashscreen.hide();
 }

@@ -32,15 +32,15 @@ export class MyApp {
         suic_ideas: "0"
     };
 
-    private static chart: MetricChart | undefined;
-    private static notesdb: NotesDB = new NotesDB();
-    private static metricsdb : MetricsDB = new MetricsDB();
+    private chart: MetricChart | undefined;
+    private notesdb: NotesDB = new NotesDB();
+    private metricsdb : MetricsDB = new MetricsDB();
 
     public logo = imgUrl;
     public error = false;
 
     public initChart() {
-        MyApp.chart = new MetricChart(
+        this.chart = new MetricChart(
             document.getElementById("chart") as HTMLCanvasElement,
         );
 
@@ -50,13 +50,13 @@ export class MyApp {
     initDB() {
         this.openDB();
 
-        MyApp.metricsdb
+        this.metricsdb
         .create()
         .then(() => {
-            return MyApp.notesdb.create();
+            return this.notesdb.create();
         })
         .then(() => {
-            return MyApp.metricsdb.getLast();
+            return this.metricsdb.getLast();
         })
         .then((data) => {
             this.state.moral = data.moral.toString();
@@ -82,7 +82,7 @@ export class MyApp {
             energy: Number(this.state.energy),
             suicidal_ideas: Number(this.state.suic_ideas)
         }
-        MyApp.metricsdb.add(d)
+        this.metricsdb.add(d)
         .then(() => {
             this.error = false;
         })
@@ -94,11 +94,11 @@ export class MyApp {
     }
 
     public updateChart() {
-        MyApp.metricsdb.getAll()
+        this.metricsdb.getAll()
         .then((states) => {
             const data = DataTransformer.transform(states);
-            if (MyApp.chart)
-                MyApp.chart.setData(data);
+            if (this.chart)
+                this.chart.setData(data);
             else
                 console.log("Chart doesn't exist");
         })
@@ -109,9 +109,9 @@ export class MyApp {
     }
 
     public closeDB(): void {
-        MyApp.metricsdb.close()
+        this.metricsdb.close()
         .then(() => {
-            return MyApp.notesdb.close();
+            return this.notesdb.close();
         })
         .then(() => {
             // ok
@@ -124,7 +124,7 @@ export class MyApp {
     }
 
     public openDB(): void {
-        MyApp.metricsdb.open();
-        MyApp.notesdb.open();
+        this.metricsdb.open();
+        this.notesdb.open();
     }
 }
